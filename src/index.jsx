@@ -1,6 +1,8 @@
 import ReactDOM from "react-dom/client";
 import React, { useState } from 'react'
 import './index.css'
+import InputRange from "./components/inputRange/inputRange";
+import { Donut } from "./components/donut";
 
 
 
@@ -16,13 +18,14 @@ function CalculMensualite(montant,apport,taux,annee){
 
 
 
+
  function App(){
     const [montant, setMontant] = useState(100000);
     const [apport, setApport] = useState(20000);
     const [taux, setTaux] = useState(1.65);
     const [annee, setAnnee] = useState(25);
 
-    const calcul = CalculMensualite(montant,apport,taux,annee) ; 
+    CalculMensualite(montant,apport,taux,annee) ; 
   
     const handleChangeMontant = function (e) {
         e.preventDefault()
@@ -34,6 +37,11 @@ function CalculMensualite(montant,apport,taux,annee){
         }    
     }    
 
+    const labelButtonApport =  apport + " € - " + Math.round(apport  * 100/montant) + " % prix"
+    const labelButtonAnnee = "Durée " + annee + " ans"
+    const labelButtonTaux = taux + "%"
+
+    
     const handleChangeApport = function (e) {
         e.preventDefault()
         setApport(e.target.value)
@@ -66,20 +74,30 @@ function CalculMensualite(montant,apport,taux,annee){
             </div>
         </div>
         <div className="col-md-6 order-md-2 mb-6">
-            <label htmlFor="apport" className="form-label">Montant de l'apport</label>
-            <input type="range" id="apport" name="apport"  min="0" max={montant} step="1000" onChange={handleChangeApport} className="form-range" value={apport}/>
-            <div className="text-center"><button type="button" className="btn btn-light w-40" disabled>{apport} € - { Math.round(apport * 100/montant) }% prix </button></div>
+            <InputRange   
+                inputName={apport} 
+                label = "Montant de l'apport" 
+                min = "0" 
+                max = {montant} 
+                step="1000"
+                functionHandle = {handleChangeApport} 
+                labelButton = {labelButtonApport}  /> 
         </div>
       </div>
 
-      <div className="row">
+      <div className="row align-items-center">
         <div className="col-md-6 order-md-2 mb-6">
-             <img></img>
+            <Donut />
         </div>
-        <div className="col-md-6 order-md-2 mb-6">
-            <label htmlFor="annee" className="form-label">Durée de</label>
-            <input type="range" id="annee" name="annee"  min="2" max="30" onChange={handleChangeAnnee} className="form-range"  value={annee}/>
-            <div className="text-center"><button type="button" className="btn btn-light w-40" disabled>Durée {annee} ans</button></div>
+        <div className="col-md-6 order-md-2 mb-6 ">
+        <InputRange 
+            inputName={annee} 
+            label = "Durée de" 
+            min = "2" 
+            max = "30" 
+            step= "1"
+            functionHandle = {handleChangeAnnee} 
+            labelButton = {labelButtonAnnee}  /> 
         </div>
       </div>
 
@@ -94,9 +112,14 @@ function CalculMensualite(montant,apport,taux,annee){
             </div>
         </div>
         <div className="col-md-6 order-md-2 mb-6">
-             <label htmlFor="taux" className="form-label">Taux d'intérêt</label>
-             <input type="range" id="taux" name="taux"  min="0.01" max="5" step="0.01" onChange={handleChangeTaux} className="form-range"  value={taux}/>
-             <div className="text-center "><button type="button" className="btn btn-light w-40" disabled>{taux}%</button></div>
+             <InputRange 
+                inputName={taux} 
+                label = "Taux d'intérêt" 
+                min = "0.01" 
+                max = "5" 
+                step="0.01"
+                functionHandle = {handleChangeTaux} 
+                labelButton = {labelButtonTaux}  /> 
         </div>
       </div>
 
@@ -110,3 +133,4 @@ const root = ReactDOM.createRoot(document.getElementById("app"));
 root.render(
     <div><App/></div>
 );
+

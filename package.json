@@ -4,11 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build:svg": "svgr svg/ -d components/"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@svgr/cli": "^6.5.1",
     "bootstrap": "^5.2.3",
     "react": "^18.2.0",
     "react-bootstrap": "^2.7.0",
